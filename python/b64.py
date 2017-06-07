@@ -46,7 +46,6 @@ def _error(*args, **kwargs):
     exit(1)
 
 
-
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         action = encode
@@ -58,7 +57,6 @@ if __name__ == '__main__':
         action = decode
     else:
         action = _error
-
 
     def stdin_bytes():
         for i in sys.stdin.buffer:
