@@ -27,14 +27,14 @@ def encode(rawbytes):
 
 def decode(b64in):
     for quad in tuples_of(4, b64in):
-        b1, b2, b3, b4 = [VALUES.get(b, None) for b in quad]
-        yield (b1 << 2) | (b2 >> 4)
+        b0, b1, b2, b3 = [VALUES.get(b, None) for b in quad]
+        yield (b0 << 2) | (b1 >> 4)
 
-        if quad[2] != PADDING_SYMBOL:
-            yield ((b2 << 4) & 0xFF) | (b3 >> 2)
+        if b2 != None:
+            yield ((b1 << 4) & 0xFF) | (b2 >> 2)
 
-        if quad[3] != PADDING_SYMBOL:
-            yield ((b3 << 6) & 0xFF) | b4
+        if b3 != None:
+            yield ((b2 << 6) & 0xFF) | b3
 
 def tuples_of(length, iterable):
     iterables = [iter(iterable)] * length
