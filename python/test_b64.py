@@ -1,16 +1,19 @@
 import pytest
 import b64
 
+def transform_test(transform, in_value, expected):
+    out = transform(in_value)
+    result = b''.join(bytes([b]) for b in out)
+    assert  expected == result
+
+
 @pytest.mark.parametrize("bytes_input,expected", [
     (b'123', b'MTIz'),
     (b'7Zg', b'N1pn'),
     (b'AzU', b'QXpV'),
 ])
 def test__encode__with_3_bytes(bytes_input, expected):
-    out = b64.encode(bytes_input)
-    result = b''.join(bytes([b]) for b in out)
-
-    assert  expected == result
+    transform_test(b64.encode, bytes_input, expected)
 
 @pytest.mark.parametrize("bytes_input,expected", [
     (b'pSj3Ka', b'cFNqM0th'),
@@ -18,10 +21,7 @@ def test__encode__with_3_bytes(bytes_input, expected):
     (b'p^.k!s', b'cF4uayFz'),
 ])
 def test__encode__with_bytes_multiple_of_3(bytes_input, expected):
-    out = b64.encode(bytes_input)
-    result = b''.join(bytes([b]) for b in out)
-
-    assert  expected == result
+    transform_test(b64.encode, bytes_input, expected)
 
 @pytest.mark.parametrize("bytes_input,expected", [
     (b'pSj3K', b'cFNqM0s='),
@@ -29,10 +29,7 @@ def test__encode__with_bytes_multiple_of_3(bytes_input, expected):
     (b'p^.k!', b'cF4uayE='),
 ])
 def test__encode__1_padding(bytes_input, expected):
-    out = b64.encode(bytes_input)
-    result = b''.join(bytes([b]) for b in out)
-
-    assert  expected == result
+    transform_test(b64.encode, bytes_input, expected)
 
 @pytest.mark.parametrize("bytes_input,expected", [
     (b'pSjK', b'cFNqSw=='),
@@ -40,10 +37,7 @@ def test__encode__1_padding(bytes_input, expected):
     (b'p^.}', b'cF4ufQ=='),
 ])
 def test__encode__2_paddings(bytes_input, expected):
-    out = b64.encode(bytes_input)
-    result = b''.join(bytes([b]) for b in out)
-
-    assert  expected == result
+    transform_test(b64.encode, bytes_input, expected)
 
 @pytest.mark.parametrize("b64_input,expected", [
     (b'MTIz', b'123'),
@@ -51,10 +45,7 @@ def test__encode__2_paddings(bytes_input, expected):
     (b'QXpV', b'AzU'),
 ])
 def test__decode__with_input_of_lenght_4(b64_input, expected):
-    out = b64.decode(b64_input)
-    result = b''.join(bytes([b]) for b in out)
-
-    assert  expected == result
+    transform_test(b64.decode, b64_input, expected)
 
 @pytest.mark.parametrize("b64_input,expected", [
     (b'cFNqM0th', b'pSj3Ka'),
@@ -62,10 +53,7 @@ def test__decode__with_input_of_lenght_4(b64_input, expected):
     (b'cF4uayFz', b'p^.k!s'),
 ])
 def test__decode__without_padding(b64_input, expected):
-    out = b64.decode(b64_input)
-    result = b''.join(bytes([b]) for b in out)
-
-    assert  expected == result
+    transform_test(b64.decode, b64_input, expected)
 
 @pytest.mark.parametrize("b64_input,expected", [
     (b'cFNqM0s=', b'pSj3K'),
@@ -73,10 +61,7 @@ def test__decode__without_padding(b64_input, expected):
     (b'cF4uayE=', b'p^.k!'),
 ])
 def test__decode__with_1_padding(b64_input, expected):
-    out = b64.decode(b64_input)
-    result = b''.join(bytes([b]) for b in out)
-
-    assert  expected == result
+    transform_test(b64.decode, b64_input, expected)
 
 @pytest.mark.parametrize("b64_input,expected", [
     (b'cFNqSw==', b'pSjK'),
@@ -84,7 +69,4 @@ def test__decode__with_1_padding(b64_input, expected):
     (b'cF4ufQ==', b'p^.}'),
 ])
 def test__decode__with_2_padding(b64_input, expected):
-    out = b64.decode(b64_input)
-    result = b''.join(bytes([b]) for b in out)
-
-    assert  expected == result
+    transform_test(b64.decode, b64_input, expected)
