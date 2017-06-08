@@ -2,7 +2,10 @@
 import sys
 
 SYMBOLS = b'0123456789ABCDEF'
+LOWER_SYMBOLS = b'0123456789abcdef'
 VALUES = {s: v for (v, s) in enumerate(SYMBOLS)}
+LOWER_VALUES = {s: v for (v, s) in enumerate(LOWER_SYMBOLS)}
+VALUES = {**VALUES, **LOWER_VALUES}
 
 def encode(inbytes):
     for b in inbytes:
