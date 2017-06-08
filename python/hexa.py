@@ -13,8 +13,8 @@ def encode(inbytes):
         yield SYMBOLS[b & 0x0F]
 
 def decode(inbytes):
-    nibble_iter = iter(inbytes)
-    for n1, n2 in zip(nibble_iter, nibble_iter):
+    nyble_iter = iter(inbytes)
+    for n1, n2 in zip(nyble_iter, nyble_iter):
         yield VALUES[n1] << 4 | VALUES[n2]
 
 
