@@ -23,9 +23,11 @@ def test__byte_frequency__single_byte_score(rawbyte, expected):
 def test__byte_frequency__unknown_bytes_dont_score(rawbyte, expected):
     assert expected == scoring.byte_frequency(rawbyte, MOCK_SCORES)
 
-
-def test__byte_frequency__multiple_bytes_score():
-    rawbytes = b'abcabb'
-    expected = 10 + 20 + 30 + 10 + 20 + 20
+@pytest.mark.parametrize('rawbytes, expected', [
+    (b'abcabb', 110),
+    (b'abc', 60),
+    (b'abcca', 100),
+])
+def test__byte_frequency__multiple_bytes_score(rawbytes, expected):
     assert expected == scoring.byte_frequency(rawbytes, MOCK_SCORES)
 
