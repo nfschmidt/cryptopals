@@ -9,11 +9,10 @@ def repeated_xor(key, rawbytes):
     return fixed_xor(itertools.cycle(key), rawbytes)
 
 
-
 if __name__ == '__main__':
     if len(sys.argv) == 4 and sys.argv[1] == 'fixor':
         action = fixed_xor
-    if len(sys.argv) == 4 and sys.argv[1] == 'rexor':
+    elif len(sys.argv) == 4 and sys.argv[1] == 'rexor':
         action = repeated_xor
     else:
         print("ERROR", file=sys.stdout)
