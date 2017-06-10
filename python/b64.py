@@ -9,18 +9,29 @@ VALUES = {s: i for (i, s) in enumerate(SYMBOLS)}
 
 def encode(rawbytes):
     for triplet in tuples_of(3, rawbytes):
+        # Symbol corresponding to the first 6 bits of the first byte
         yield SYMBOLS[triplet[0] >> 2]
 
         if triplet[1] != None:
+            # No double padding
+            # Symbol corresponding to the last 2 bits of the first byte
+            # and first 4 bits of the second byte
             yield SYMBOLS[((triplet[0] & 0x03) << 4) | triplet[1] >> 4]
 
             if triplet[2] != None:
+                # No double padding
+                # Symbols corresponding to last 4 bits of second byte and
+                # first 2 of the third byte, and last 6 bits of the third byte
                 yield SYMBOLS[((triplet[1] & 0x0F) << 2) | triplet[2] >> 6]
                 yield SYMBOLS[(triplet[2] & 0x3F)]
             else:
+                # Single padding
+                # Symbol corresponding to last 4 bits of second byte, and padding
                 yield SYMBOLS[(triplet[1] & 0x0F) << 2]
                 yield PADDING_SYMBOL
         else:
+            # Double padding
+            # Symbol corresponding to last 2 bits of first byte, and 2 paddings
             yield SYMBOLS[(triplet[0] & 0x03) << 4]
             yield PADDING_SYMBOL
             yield PADDING_SYMBOL
