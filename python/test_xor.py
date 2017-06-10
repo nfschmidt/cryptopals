@@ -18,3 +18,21 @@ def test__fixed_xor__1_byte(rawbytes1, rawbytes2, expected):
 def test__fixed_xor__multiple_bytes(rawbytes1, rawbytes2, expected):
     result = b''.join(bytes([x]) for x in xor.fixed_xor(rawbytes1, rawbytes2))
     assert expected == result
+
+@pytest.mark.parametrize('key, rawbytes, expected', [
+    (b'a', b'test', b'\x15\x04\x12\x15'),
+    (b'*', b'a8!=aS', b'\x4b\x12\x0b\x17\x4b\x79'),
+])
+def test__repeated_xor__single_byte_key(key, rawbytes, expected):
+    result = b''.join(bytes([x]) for x in xor.repeated_xor(key, rawbytes))
+    assert expected == result
+
+@pytest.mark.parametrize('key, rawbytes, expected', [
+    (b'abc', b'test', b'\x15\x07\x10\x15'),
+    (b'*(gj', b'a8!=aS', b'\x4b\x10\x46\x57\x4b\x7b'),
+    (b'097h1lh', b'a8', b'\x51\x01'),
+])
+def test__repeated_xor__multiple_bytes_key(key, rawbytes, expected):
+    result = b''.join(bytes([x]) for x in xor.repeated_xor(key, rawbytes))
+    assert expected == result
+

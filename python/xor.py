@@ -1,14 +1,20 @@
 #!/usr/bin/env python
 import sys
+import itertools
 
 def fixed_xor(rawbytes1, rawbytes2):
     return (int(b1)^int(b2) for b1, b2 in zip(rawbytes1, rawbytes2))
+
+def repeated_xor(key, rawbytes):
+    return fixed_xor(itertools.cycle(key), rawbytes)
 
 
 
 if __name__ == '__main__':
     if len(sys.argv) == 4 and sys.argv[1] == 'fixor':
         action = fixed_xor
+    if len(sys.argv) == 4 and sys.argv[1] == 'rexor':
+        action = repeated_xor
     else:
         print("ERROR", file=sys.stdout)
         exit(1)
