@@ -31,18 +31,26 @@ _ENGLISH_LOWER_FREQUENCIES = [
     ('z', 74),
 ]
 
-ENGLISH = {
+ENGLISH_FREQUENCIES = {
     **{bytes(c, 'utf-8')[0]: v for c, v in _ENGLISH_LOWER_FREQUENCIES},
     **{bytes(c.upper(), 'utf-8')[0]: v for c, v in _ENGLISH_LOWER_FREQUENCIES}
 }
 
+SPACE_FREQUENCIES = {b' '[0]: 1}
+
 def byte_frequency(rawbytes, frequency_table):
     return sum(frequency_table.get(r, 0) for r in rawbytes)
 
+def scorer(frequency_table):
+    return partial(byte_frequency, frequency_table=frequency_table)
+
 
 if __name__ == '__main__':
-    if len(sys.argv) == 3 and sys.argv[1] == 'bytefreq' and sys.argv[2] == 'en':
-        action = partial(byte_frequency, frequency_table=ENGLISH)
+    if len(sys.argv) == 3 and sys.argv[1] == 'bytefreq':
+        if sys.argv[2] == 'en':
+            action = scorer(ENGLISH_FREQUENCIES)
+        if sys.argv[2] == 'space':
+            action = scorer(SPACE_FREQUENCIES)
     else:
         print("ERROR", file=sys.stderr)
         exit(1)

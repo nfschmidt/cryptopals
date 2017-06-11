@@ -36,3 +36,13 @@ def test__repeated_xor__multiple_bytes_key(key, rawbytes, expected):
     result = b''.join(bytes([x]) for x in xor.repeated_xor(key, rawbytes))
     assert expected == result
 
+def test__decrypt_single_byte__returns_best_score_result():
+    plain = b'test plain text'
+    key = b'X'
+    scoring = lambda b: 1 if b == plain else 0
+    
+    encrypted = bytes(xor.repeated_xor(key, plain))
+    expected = (key, plain)
+    assert expected == xor.decrypt(encrypted, scoring)
+
+
