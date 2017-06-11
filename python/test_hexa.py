@@ -7,7 +7,7 @@ import hexa
     (b' ', b'20'),
 ])
 def test__encode__1_byte(inbytes, expected):
-    result = b''.join(bytes([x]) for x in hexa.encode(inbytes))
+    result = bytes(hexa.encode(inbytes))
     assert expected == result 
 
 @pytest.mark.parametrize('inbytes,expected', [
@@ -16,7 +16,7 @@ def test__encode__1_byte(inbytes, expected):
     (b' <Z*+}16L', b'203C5A2A2B7D31364C'),
 ])
 def test__encode__multiple_bytes(inbytes, expected):
-    result = b''.join(bytes([x]) for x in hexa.encode(inbytes))
+    result = bytes(hexa.encode(inbytes))
     assert expected == result 
 
 @pytest.mark.parametrize('inbytes,expected', [
@@ -25,7 +25,7 @@ def test__encode__multiple_bytes(inbytes, expected):
     (b'20', b' '),
 ])
 def test__decode__1_byte(inbytes, expected):
-    result = b''.join(bytes([x]) for x in hexa.decode(inbytes))
+    result = bytes(hexa.decode(inbytes))
     assert expected == result 
 
 @pytest.mark.parametrize('inbytes,expected', [
@@ -34,7 +34,7 @@ def test__decode__1_byte(inbytes, expected):
     (b'203C5A2A2B7D31364C', b' <Z*+}16L'),
 ])
 def test__decode__multiple_bytes(inbytes, expected):
-    result = b''.join(bytes([x]) for x in hexa.decode(inbytes))
+    result = bytes(hexa.decode(inbytes))
     assert expected == result 
 
 @pytest.mark.parametrize('inbytes,expected', [
@@ -43,5 +43,5 @@ def test__decode__multiple_bytes(inbytes, expected):
     (b'203C5A2a2B7d31364C', b' <Z*+}16L'),
 ])
 def test__decode__uppercase_and_lowercase(inbytes, expected):
-    result = b''.join(bytes([x]) for x in hexa.decode(inbytes))
+    result = bytes(hexa.decode(inbytes))
     assert expected == result 

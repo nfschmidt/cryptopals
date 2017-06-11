@@ -3,7 +3,7 @@ import b64
 
 def transform_test(transform, in_value, expected):
     out = transform(in_value)
-    result = b''.join(bytes([b]) for b in out)
+    result = bytes(out)
     assert  expected == result
 
 

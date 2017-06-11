@@ -7,7 +7,7 @@ import xor
     (b'>', b'{', b'\x45'),
 ])
 def test__fixed_xor__1_byte(rawbytes1, rawbytes2, expected):
-    result = b''.join(bytes([x]) for x in xor.fixed_xor(rawbytes1, rawbytes2))
+    result = bytes(xor.fixed_xor(rawbytes1, rawbytes2))
     assert expected == result
 
 @pytest.mark.parametrize('rawbytes1,rawbytes2,expected', [
@@ -16,7 +16,7 @@ def test__fixed_xor__1_byte(rawbytes1, rawbytes2, expected):
     (b'>Fo', b'{*R', b'\x45\x6c\x3d'),
 ])
 def test__fixed_xor__multiple_bytes(rawbytes1, rawbytes2, expected):
-    result = b''.join(bytes([x]) for x in xor.fixed_xor(rawbytes1, rawbytes2))
+    result = bytes(xor.fixed_xor(rawbytes1, rawbytes2))
     assert expected == result
 
 @pytest.mark.parametrize('key, rawbytes, expected', [
@@ -24,7 +24,7 @@ def test__fixed_xor__multiple_bytes(rawbytes1, rawbytes2, expected):
     (b'*', b'a8!=aS', b'\x4b\x12\x0b\x17\x4b\x79'),
 ])
 def test__repeated_xor__single_byte_key(key, rawbytes, expected):
-    result = b''.join(bytes([x]) for x in xor.repeated_xor(key, rawbytes))
+    result = bytes(xor.repeated_xor(key, rawbytes))
     assert expected == result
 
 @pytest.mark.parametrize('key, rawbytes, expected', [
@@ -33,7 +33,7 @@ def test__repeated_xor__single_byte_key(key, rawbytes, expected):
     (b'097h1lh', b'a8', b'\x51\x01'),
 ])
 def test__repeated_xor__multiple_bytes_key(key, rawbytes, expected):
-    result = b''.join(bytes([x]) for x in xor.repeated_xor(key, rawbytes))
+    result = bytes(xor.repeated_xor(key, rawbytes))
     assert expected == result
 
 def test__decrypt_single_byte__returns_best_score_result():
