@@ -9,11 +9,11 @@ def fixed_xor(rawbytes1, rawbytes2):
 def repeated_xor(key, rawbytes):
     return fixed_xor(itertools.cycle(key), rawbytes)
 
-def decrypt(encrypted, scoring):
+def decrypt(encrypted, scorer):
     best = (-1, None, None)
     for key in (bytes([b]) for b in range(0, 256)):
         decrypted = bytes(repeated_xor(key, encrypted))
-        score = scoring(decrypted) 
+        score = scorer(decrypted) 
         if score > best[0]:
             best = (score, key, decrypted)
 
