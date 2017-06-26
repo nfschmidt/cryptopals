@@ -2,6 +2,7 @@
 import sys
 import itertools
 import scoring
+import byte
 
 def fixed_xor(rawbytes1, rawbytes2):
     return (int(b1)^int(b2) for b1, b2 in zip(rawbytes1, rawbytes2))
@@ -10,14 +11,15 @@ def repeated_xor(key, rawbytes):
     return fixed_xor(itertools.cycle(key), rawbytes)
 
 def decrypt(encrypted, scorer):
-    best = (-1, None, None)
+    best = (None, None, None)
     for key in (bytes([b]) for b in range(0, 256)):
         decrypted = bytes(repeated_xor(key, encrypted))
         score = scorer(decrypted) 
-        if score > best[0]:
+        if best[0] == None or score > best[0]:
             best = (score, key, decrypted)
 
     return (best[1], best[2])
+
 
 if __name__ == '__main__':
     if len(sys.argv) == 4 and sys.argv[1] == 'fixor':

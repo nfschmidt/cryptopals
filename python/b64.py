@@ -71,6 +71,9 @@ if __name__ == '__main__':
 
     def stdin_bytes():
         for i in sys.stdin.buffer:
+            if not i:
+                return
+
             yield from i
 
     for b in action(stdin_bytes()):

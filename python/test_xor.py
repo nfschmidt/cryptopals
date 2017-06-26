@@ -44,5 +44,3 @@ def test__decrypt_single_byte__returns_best_score_result():
     encrypted = bytes(xor.repeated_xor(key, plain))
     expected = (key, plain)
     assert expected == xor.decrypt(encrypted, scoring)
-
-
