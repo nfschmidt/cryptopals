@@ -44,6 +44,20 @@ def byte_frequency(rawbytes, frequency_table):
 def scorer(frequency_table):
     return partial(byte_frequency, frequency_table=frequency_table)
 
+def text_characters_scorer(rawbytes):
+    valid_bytes = (
+        b"abcdefghijklmnopqrstuvwxyz"
+        b"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        b"0123456789.,\n: '?"
+    )
+    return sum(1 if b in valid_bytes else -100 for b in rawbytes)
+
+def letter_characters_scorer(rawbytes):
+    valid_bytes = (
+        b"abcdefghijklmnopqrstuvwxyz"
+        b"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    )
+    return sum(1 if b in valid_bytes else -100 for b in rawbytes)
 
 if __name__ == '__main__':
     if len(sys.argv) == 3 and sys.argv[1] == 'bytefreq':

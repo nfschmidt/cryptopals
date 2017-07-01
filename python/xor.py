@@ -29,8 +29,12 @@ if __name__ == '__main__':
     elif len(sys.argv) == 4 and sys.argv[1] == 'decrypt' and sys.argv[2] == 'single':
         if sys.argv[3] == 'en':
             scorer = scoring.scorer(scoring.ENGLISH_FREQUENCIES)
-        if sys.argv[3] == 'space':
+        elif sys.argv[3] == 'space':
             scorer = scoring.scorer(scoring.SPACE_FREQUENCIES)
+        elif sys.argv[3] == 'text':
+            scorer = scoring.text_characters_scorer
+        elif sys.argv[3] == 'letters':
+            scorer = scoring.letter_characters_scorer
 
         def stdin_bytes():
             for b in sys.stdin.buffer:

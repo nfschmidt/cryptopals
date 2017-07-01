@@ -1,5 +1,6 @@
 import xor
 import byte
+import scoring
 
 def keysizes(rawbytes, start_length, limit_length, keysize_scorer):
     scores = {length: keysize_scorer(rawbytes, length)
@@ -41,14 +42,6 @@ def hamming_distance_scorer(rawbytes, size):
     normalized = average / size
     return 1/normalized
 
-def text_characters_scorer(rawbytes):
-    valid_bytes = (
-        b"abcdefghijklmnopqrstuvwxyz"
-        b"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        b"0123456789.,\n: '?"
-    )
-    return sum(1 if b in valid_bytes else -100 for b in rawbytes)
-
 
 if __name__ == '__main__':
     import sys
@@ -64,8 +57,8 @@ if __name__ == '__main__':
         keysize_limit=41,
         keys_to_try=10,
         keysize_scorer=hamming_distance_scorer,
-        xor_scorer=text_characters_scorer,
-        result_scorer=text_characters_scorer
+        xor_scorer=scoring.text_characters_scorer,
+        result_scorer=scoring.text_characters_scorer
     )
 
     print(f"Key: {key.decode('utf-8')} {decrypted.decode('utf-8')}")
