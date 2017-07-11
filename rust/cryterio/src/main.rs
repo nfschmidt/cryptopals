@@ -2,6 +2,8 @@ extern crate clap;
 use clap::{App, SubCommand};
 use std::io::{self, Read};
 
+extern crate encoding;
+
 fn main() {
     let matches = App::new("cryterio")
                           .version("v0.1")

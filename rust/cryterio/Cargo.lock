@@ -3,6 +3,7 @@ name = "cryterio"
 version = "0.1.0"
 dependencies = [
  "clap 2.19.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "encoding 0.1.0",
 ]
 
 [[package]]
@@ -29,6 +30,10 @@ dependencies = [
  "unicode-width 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "vec_map 0.6.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "encoding"
+version = "0.1.0"
 
 [[package]]
 name = "kernel32-sys"
